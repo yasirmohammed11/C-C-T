@@ -1,0 +1,36 @@
+# ملف تكوين Codemagic
+# يضمن بناء التطبيق بشكل صحيح على منصة Codemagic
+
+workflows:
+  android-build:
+    name: Android Build
+    max_build_duration: 60
+    instance_type: mac_mini_m1
+    environment:
+      flutter: stable
+      xcode: latest
+      cocoapods: default
+      vars:
+        PACKAGE_NAME: "com.example.cervicalcancerflutterapp" # يجب أن يتطابق مع applicationId في build.gradle
+        APP_NAME: "Cervical Cancer App"
+    
+    scripts:
+      - name: Set up Flutter
+        script: |
+          flutter clean
+          flutter pub get
+      
+      - name: Build Android Release
+        script: |
+          flutter build apk --release
+          
+    artifacts:
+      - build/app/outputs/flutter-apk/app-release.apk
+      
+    publishing:
+      email:
+        recipients:
+          - user@example.com # استبدل ببريدك الإلكتروني
+        trigger:
+          - success
+          - failure
