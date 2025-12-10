@@ -31,6 +31,4 @@ workflows:
       email:
         recipients:
           - user@example.com # استبدل ببريدك الإلكتروني
-        trigger:
-          - success
-          - failure
+        
